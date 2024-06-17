@@ -19,6 +19,39 @@ Esse sistema implementa um conjunto abrangente de técnicas de análise de dados
               print("\nBottom 10 correlações com SalePrice:\n", bottom_correlations)
               ```
 
+- Exemplo de utilização para avaliar se há diferenças significativas na média de SalePrice entre as categorias de cada característica categórica:
+
+            ```
+            anova_results = []
+
+            for col in cat_cols:
+                categories = treino[col].unique()
+                
+                if all(treino[treino[col] == category]['SalePrice'].count() > 1 for category in categories):
+                    try:
+                        anova = f_oneway(*[treino[treino[col] == category]['SalePrice'] for category in categories])
+                        anova_results.append((col, anova.statistic, anova.pvalue))
+                    except Exception as e:
+                        print(f"Erro ao calcular ANOVA para {col}: {e}")
+            
+            df_anova = pd.DataFrame(anova_results, columns=['Variável Categórica', 'F-statistic', 'p-value'])
+            
+            df_anova.sort_values(by='p-value', ascending=True, inplace=True)
+            
+            top_10_correlations = df_anova.head(10)
+            
+            print("As 10 maiores correlações:")
+            print(top_10_correlations)
+            
+            bottom_10_correlations = df_anova.tail(10)
+            
+            print("\nAs 10 menores correlações:")
+            print(bottom_10_correlations)
+    
+            ```
+
+  
+
 - Exemplo de utilização para codificação de recursos categóricos:
 
             ```python
