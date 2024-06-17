@@ -4,3 +4,6 @@ Esse sistema implementa um conjunto abrangente de técnicas de análise de dados
 
 ### Bibliotecas Utilizadas
 - [requirements.txt](src/requirements.txt): `pip install -r requirements.txt`
+
+## Organização
+- [src](src): Nesse diretório estão os scripts do sistema e o arquivo csv.
